@@ -1,9 +1,9 @@
 class Shapeshifter < ActiveRecord::Base
-  scope :metamorphose, -> (schema:, tuples:) {
+  def self.metamorphose(schema:, tuples:)
     with(table_name => sanitize_sql_array(<<-SQL.chomp, tuples.flatten))
-SELECT * FROM (VALUES #{to_values(tuples)}) AS #{table_name}(id, #{schema.join(', ')})
+SELECT * FROM (VALUES #{to_values(tuples)}) AS #{table_name}(#{primary_key}, #{schema.join(', ')})
     SQL
-  }
+  end
 
   def self.to_values(tuples)
     tuples.
