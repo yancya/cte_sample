@@ -11,13 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151104091409) do
+ActiveRecord::Schema.define(version: 20151105170113) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "hoges", force: :cascade do |t|
+  create_table "shapeshifters", force: :cascade do |t|
+  end
+
+  create_table "users", force: :cascade do |t|
     t.text "name"
+    t.date "birthday"
   end
 
 end

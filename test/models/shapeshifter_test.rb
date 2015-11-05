@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class HogeTest < ActiveSupport::TestCase
+class ShapeshifterTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
