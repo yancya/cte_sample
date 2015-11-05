@@ -1,15 +1,15 @@
 class Shapeshifter < ActiveRecord::Base
   def self.metamorphose(schema:, tuples:)
     with(table_name => sanitize_sql_array(<<-SQL.chomp, tuples.flatten))
-SELECT * FROM (VALUES #{to_values(tuples)}) AS #{table_name}(#{primary_key}, #{schema.join(', ')})
+SELECT * FROM #{to_values(tuples)} AS #{table_name}(#{primary_key}, #{schema.join(', ')})
     SQL
   end
 
   def self.to_values(tuples)
     tuples.
-      map.
-      with_index(1) { |tuple, i| "(#{i}, #{tuple.map { '?' }.join(', ')})" }.
-      join(", ")
+      map.with_index(1) { |tuple, i| "(#{i}, #{tuple.map { '?' }.join(', ')})" }.
+      join(", ").
+      tap { |values| break "(VALUES #{values})" }
   end
 
   def self.sanitize_sql_array(sql, values)
