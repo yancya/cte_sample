@@ -1,7 +1,9 @@
 class Shapeshifter < ActiveRecord::Base
   def self.metamorphose(schema:, tuples:)
     with(table_name => sanitize_sql_array(<<-SQL.chomp, tuples.flatten))
-SELECT * FROM #{to_values(tuples)} AS t(#{primary_key}, #{schema.join(', ')})
+SELECT *
+  FROM #{to_values(tuples)}
+    AS t(#{primary_key}, #{schema.join(', ')})
     SQL
   end
 
